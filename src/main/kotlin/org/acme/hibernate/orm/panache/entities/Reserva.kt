@@ -13,8 +13,8 @@ class Reserva() : PanacheEntity() {
     @JoinColumn(name = "id_usuario", nullable = false)
     lateinit var usuario: Usuario
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_disponibilidade", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_disponibilidade", nullable = false, unique = true)
     lateinit var disponibilidade: Disponibilidade
 
     @Column(nullable = false)

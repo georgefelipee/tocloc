@@ -8,6 +8,7 @@ import jakarta.validation.Valid
 import jakarta.ws.rs.Path
 import jakarta.ws.rs.core.MediaType
 import jakarta.ws.rs.core.Response
+import org.acme.hibernate.orm.panache.forms.LoginForm
 import org.acme.hibernate.orm.panache.forms.UserForm
 import org.acme.hibernate.orm.panache.services.UserService
 
@@ -22,7 +23,6 @@ class UserResource(  @Inject var userService: UserService
     @POST
     @Path("/create")
     fun createUser(@Valid request: UserForm): Response {
-        print("vapo")
         val newUser = userService.createUser(
             nome = request.nome,
             email = request.email,
@@ -30,5 +30,15 @@ class UserResource(  @Inject var userService: UserService
             tipoUsuario = request.tipoUsuario
         )
         return Response.status(Response.Status.CREATED).entity(newUser).build()
+    }
+
+    @POST
+    @Path("/login")
+    fun loginUser(@Valid request: LoginForm): Response {
+        val user = userService.loginUser(
+            email = request.email,
+            senha = request.senha
+        )
+        return Response.status(Response.Status.OK).entity(user).build()
     }
 }

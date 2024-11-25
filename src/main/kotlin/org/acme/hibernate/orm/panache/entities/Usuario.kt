@@ -1,6 +1,7 @@
 package org.acme.hibernate.orm.panache.entities
 
 
+import io.quarkus.hibernate.orm.panache.kotlin.PanacheCompanion
 import io.quarkus.hibernate.orm.panache.kotlin.PanacheEntity
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -10,6 +11,7 @@ import java.time.LocalDateTime
 @Entity
 class Usuario() : PanacheEntity() {
 
+    companion object : PanacheCompanion<Usuario>
     @Column(nullable = false, length = 100)
     lateinit var nome: String
 
