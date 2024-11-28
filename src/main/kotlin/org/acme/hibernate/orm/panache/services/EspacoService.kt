@@ -9,7 +9,7 @@ import org.acme.hibernate.orm.panache.forms.LocalForm
 
 
 @ApplicationScoped
-class LocalService {
+class EspacoService {
 
     @Transactional
     fun createLocal(localForm: LocalForm): LocalEsportivo {

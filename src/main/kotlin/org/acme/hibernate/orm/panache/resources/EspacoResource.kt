@@ -19,7 +19,7 @@ import org.acme.hibernate.orm.panache.services.UserService
 @Path("/local")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-class LocalResource(@Inject var localService: LocalService
+class EspacoResource(@Inject var localService: LocalService
 ) {
 
 

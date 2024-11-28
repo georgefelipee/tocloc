@@ -28,7 +28,7 @@ class LocalEsportivo() : PanacheEntity() {
     @OneToMany(mappedBy = "local", cascade = [CascadeType.ALL], orphanRemoval = true)
     var espacos: MutableList<Espaco> = mutableListOf()
 
-    // Construtor adicional para inicialização simplificada
+
     constructor(nome: String, endereco: String, descricao: String?, anfitriao: Usuario) : this() {
         this.nome = nome
         this.endereco = endereco
