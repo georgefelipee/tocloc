@@ -9,40 +9,31 @@ import jakarta.ws.rs.GET
 import jakarta.ws.rs.Path
 import jakarta.ws.rs.core.MediaType
 import jakarta.ws.rs.core.Response
+import org.acme.hibernate.orm.panache.forms.EspacoForm
 import org.acme.hibernate.orm.panache.forms.LocalForm
 import org.acme.hibernate.orm.panache.forms.LoginForm
 import org.acme.hibernate.orm.panache.forms.UserForm
+import org.acme.hibernate.orm.panache.services.EspacoService
 import org.acme.hibernate.orm.panache.services.LocalService
 import org.acme.hibernate.orm.panache.services.UserService
 
 
-@Path("/local")
+@Path("/espaco")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-class EspacoResource(@Inject var localService: LocalService
+class EspacoResource(@Inject var espacoService: EspacoService
 ) {
 
 
     @POST
     @Path("/create")
-    fun createLocal(@Valid request: LocalForm): Response {
-        var newLocal = localService.createLocal(
-            localForm = request
+    fun createEspaco(@Valid espacoForm: EspacoForm): Response {
+        var newEspaco = espacoService.createEspaco(
+            espacoForm = espacoForm
         )
-        return Response.status(Response.Status.CREATED).entity(newLocal).build()
+        return Response.status(Response.Status.CREATED).build()
     }
 
-    @GET
-    @Path("/list")
-    fun listAll(): Response {
-        return Response.ok(localService.listAll()).build()
-    }
-
-    @GET
-    @Path("/get/{id}")
-    fun getLocalById(id: Long): Response {
-        return Response.ok(localService.getLocalById(id)).build()
-    }
 
 
 }

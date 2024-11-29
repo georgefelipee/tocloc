@@ -14,32 +14,30 @@ import jakarta.persistence.Table
 @Table(name = "espaco")
 class Espaco(
     @Column(nullable = false, length = 100)
-    var nome: String,
+    var nome: String = "Espaço Padrão",
 
     @Column(length = 500)
-    var descricao: String? = null,
+    var descricao: String? = "Descrição Padrão",
 
     @Column(nullable = false, length = 50)
-    var tipoEsporte: String,
+    var tipoEsporte: String = "Esporte Padrão",
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_local", nullable = false)
-    var local: LocalEsportivo
-) : PanacheEntity() {
-    constructor() : this(
-        "",
-        "",
-        "",
-        LocalEsportivo(
-            nome = "",
-            endereco = "",
-            descricao = "",
-            anfitriao = Usuario()
-        )
-    ) {
-
-    }
+    var local: LocalEsportivo = LocalEsportivo(
+        nome = "Local Padrão",
+        endereco = "Endereço Padrão",
+        descricao = "Descrição Local Padrão",
+        anfitriao = Usuario() // Substitua por um usuário padrão ou válido
+    ),
 
     @OneToMany(mappedBy = "espaco", cascade = [CascadeType.ALL], orphanRemoval = true)
     var disponibilidades: MutableList<Disponibilidade> = mutableListOf()
+) : PanacheEntity() {
+
+    // Bloco init opcional para validação
+    init {
+        require(nome.isNotBlank()) { "O nome do espaço não pode ser vazio." }
+        require(tipoEsporte.isNotBlank()) { "O tipo de esporte não pode ser vazio." }
+    }
 }

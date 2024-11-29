@@ -2,35 +2,35 @@ package org.acme.hibernate.orm.panache.services
 
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.transaction.Transactional
+import jakarta.ws.rs.core.Response
+import org.acme.hibernate.orm.panache.entities.Espaco
 import org.acme.hibernate.orm.panache.entities.LocalEsportivo
-import org.acme.hibernate.orm.panache.entities.TipoUsuario
-import org.acme.hibernate.orm.panache.entities.Usuario
-import org.acme.hibernate.orm.panache.forms.LocalForm
+import org.acme.hibernate.orm.panache.forms.EspacoForm
 
 
 @ApplicationScoped
 class EspacoService {
 
     @Transactional
-    fun createLocal(localForm: LocalForm): LocalEsportivo {
-        val user = Usuario.findById(localForm.anfitriao)
-            ?: throw IllegalArgumentException("Usuário não encontrado")
+    fun createEspaco(espacoForm: EspacoForm): Response {
+        print("Criando Espaço...")
+        print(espacoForm.local)
+        // Garantir que o LocalEsportivo exista
+        val local = LocalEsportivo.findById(espacoForm.local)
+            ?: throw IllegalArgumentException("Local não encontrado para o ID fornecido.")
 
-        val local = LocalEsportivo(
-            localForm.nome,
-            localForm.endereco,
-            localForm.descricao,
-            user
+        // Criar o objeto Espaco com dados válidos
+        val espaco = Espaco(
+            nome = espacoForm.nome,
+            tipoEsporte = espacoForm.tipoEsporte,
+            descricao = espacoForm.descricao,
+            local = local // Certifique-se de que local está persistido
+        )
 
-        ).apply { persist() }
-
-        return local
+        // Persistir a entidade
+        espaco.persist()
+        return Response.status(Response.Status.CREATED).entity(espaco).build()
     }
-
-    fun listAll(): List<LocalEsportivo> = LocalEsportivo.listAll()
-
-    fun getLocalById(id: Long): LocalEsportivo = LocalEsportivo.findById(id)
-        ?: throw IllegalArgumentException("Local não encontrado")
 
 
 }
