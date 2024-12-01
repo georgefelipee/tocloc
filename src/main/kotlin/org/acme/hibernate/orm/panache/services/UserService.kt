@@ -24,4 +24,14 @@ class UserService {
         return Usuario.find("email = ?1 and senha = ?2", email, senha).firstResult()
             ?: throw IllegalArgumentException("Crendenciais inválidas")
     }
+
+    @Transactional
+    fun getAllUsers(): List<Usuario> {
+        return Usuario.listAll()  // Retorna todos os usuários
+    }
+
+    @Transactional
+    fun getUserById(id: Long): Usuario {
+        return Usuario.findById(id) ?: throw IllegalArgumentException("Usuário não encontrado")
+    }
 }

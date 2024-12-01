@@ -1,11 +1,8 @@
 package org.acme.hibernate.orm.panache.resources
 
 import jakarta.inject.Inject
-import jakarta.ws.rs.Consumes
-import jakarta.ws.rs.POST
-import jakarta.ws.rs.Produces
 import jakarta.validation.Valid
-import jakarta.ws.rs.Path
+import jakarta.ws.rs.*
 import jakarta.ws.rs.core.MediaType
 import jakarta.ws.rs.core.Response
 import org.acme.hibernate.orm.panache.forms.LoginForm
@@ -32,6 +29,7 @@ class UserResource(  @Inject var userService: UserService
         return Response.status(Response.Status.CREATED).entity(newUser).build()
     }
 
+
     @POST
     @Path("/login")
     fun loginUser(@Valid request: LoginForm): Response {
@@ -40,5 +38,30 @@ class UserResource(  @Inject var userService: UserService
             senha = request.senha
         )
         return Response.status(Response.Status.OK).entity(user).build()
+    }
+
+    @GET
+    @Path("/")
+    fun getAllUsers(): Response {
+        val users = userService.getAllUsers()
+
+        return if (users.isNotEmpty()) {
+            Response.status(Response.Status.OK).entity(users).build()
+        } else {
+            Response.status(Response.Status.NOT_FOUND).entity("Nenhum usuário encontrado").build()
+        }
+    }
+
+
+
+    @GET
+    @Path("/{id}")
+    fun getUserById(@PathParam("id") id: Long): Response {
+        return try {
+            val user = userService.getUserById(id)
+            Response.status(Response.Status.OK).entity(user).build()
+        } catch (e: IllegalArgumentException) {
+            Response.status(Response.Status.NOT_FOUND).entity(e.message).build()
+        }
     }
 }
