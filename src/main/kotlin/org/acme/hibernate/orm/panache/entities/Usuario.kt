@@ -38,5 +38,5 @@ class Usuario() : PanacheEntity() {
 }
 
 enum class TipoUsuario {
-    VISITANTE, USUARIO, ANFITRIAO
+    VISITANTE, ANFITRIAO
 }
