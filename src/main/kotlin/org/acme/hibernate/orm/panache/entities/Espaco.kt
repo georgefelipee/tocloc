@@ -1,5 +1,7 @@
 package org.acme.hibernate.orm.panache.entities
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+import io.quarkus.hibernate.orm.panache.kotlin.PanacheCompanion
 import io.quarkus.hibernate.orm.panache.kotlin.PanacheEntity
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
@@ -13,6 +15,8 @@ import jakarta.persistence.Table
 @Entity
 @Table(name = "espaco")
 class Espaco(
+
+
     @Column(nullable = false, length = 100)
     var nome: String = "Espaço Padrão",
 
@@ -23,6 +27,7 @@ class Espaco(
     var tipoEsporte: String = "Esporte Padrão",
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "id_local", nullable = false)
     var local: LocalEsportivo = LocalEsportivo(
         nome = "Local Padrão",
@@ -34,6 +39,9 @@ class Espaco(
     @OneToMany(mappedBy = "espaco", cascade = [CascadeType.ALL], orphanRemoval = true)
     var disponibilidades: MutableList<Disponibilidade> = mutableListOf()
 ) : PanacheEntity() {
+
+
+    companion object : PanacheCompanion<Espaco>
 
     // Bloco init opcional para validação
     init {

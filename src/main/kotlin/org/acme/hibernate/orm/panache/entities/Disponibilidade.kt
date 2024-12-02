@@ -1,9 +1,12 @@
 package org.acme.hibernate.orm.panache.entities
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+import io.quarkus.hibernate.orm.panache.kotlin.PanacheCompanion
 import io.quarkus.hibernate.orm.panache.kotlin.PanacheEntity
 import jakarta.persistence.*
 import org.acme.hibernate.orm.panache.forms.EspacoForm
+import java.math.BigDecimal
 import java.time.LocalTime
 
 
@@ -13,6 +16,7 @@ import java.time.LocalTime
 class Disponibilidade(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_espaco", nullable = false)
+    @JsonIgnore
     var espaco: Espaco,
 
     @Column(nullable = false)
@@ -23,6 +27,9 @@ class Disponibilidade(
 
     @Column(nullable = false)
     var intervalo: Int, // Intervalo entre os horários (em minutos)
+
+    @Column(nullable = false)
+    var valor: BigDecimal, // Valor (preço) da disponibilidade
 
     @ElementCollection(targetClass = DiaSemana::class, fetch = FetchType.EAGER)
     @CollectionTable(
@@ -36,8 +43,9 @@ class Disponibilidade(
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     var status: StatusDisponibilidade = StatusDisponibilidade.DISPONIVEL
-
 ) : PanacheEntity() {
+
+    companion object : PanacheCompanion<Disponibilidade>
 
     // Construtor vazio protegido para uso do Hibernate
     protected constructor() : this(
@@ -45,6 +53,7 @@ class Disponibilidade(
         horaInicio = LocalTime.now(),
         horaFim = LocalTime.now(),
         intervalo = 0,
+        valor = BigDecimal.ZERO,
         diasSemana = mutableSetOf(),
         status = StatusDisponibilidade.DISPONIVEL
     )

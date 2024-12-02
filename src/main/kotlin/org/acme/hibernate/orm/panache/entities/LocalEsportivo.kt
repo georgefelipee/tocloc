@@ -1,6 +1,7 @@
 package org.acme.hibernate.orm.panache.entities
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import io.quarkus.hibernate.orm.panache.kotlin.PanacheCompanion
 import io.quarkus.hibernate.orm.panache.kotlin.PanacheEntity
 import jakarta.persistence.*
@@ -24,6 +25,7 @@ class LocalEsportivo() : PanacheEntity() {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_anfitriao", nullable = false)
     lateinit var anfitriao: Usuario
+
 
     @OneToMany(mappedBy = "local", cascade = [CascadeType.ALL], orphanRemoval = true)
     var espacos: MutableList<Espaco> = mutableListOf()
