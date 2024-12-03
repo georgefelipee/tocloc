@@ -34,6 +34,13 @@ class EspacoResource(@Inject var espacoService: EspacoService
         return Response.status(Response.Status.CREATED).build()
     }
 
+    @GET
+    @Path("/list")
+    fun listEspacos(): Response {
+        val espacos = espacoService.listAllEspacos()
+        return Response.ok(espacos).build()
+    }
+
 
 
 }

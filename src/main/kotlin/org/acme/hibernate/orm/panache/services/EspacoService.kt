@@ -32,5 +32,9 @@ class EspacoService {
         return Response.status(Response.Status.CREATED).entity(espaco).build()
     }
 
+    fun listAllEspacos(): List<Espaco> {
+        return Espaco.listAll()
+    }
+
 
 }

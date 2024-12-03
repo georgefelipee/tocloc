@@ -32,6 +32,8 @@ class LocalResource(@Inject var localService: LocalService
         return Response.status(Response.Status.CREATED).entity(newLocal).build()
     }
 
+
+
     @GET
     @Path("/list")
     fun listAll(): Response {

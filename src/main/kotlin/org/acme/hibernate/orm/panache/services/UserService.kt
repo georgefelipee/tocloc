@@ -34,4 +34,9 @@ class UserService {
     fun getUserById(id: Long): Usuario {
         return Usuario.findById(id) ?: throw IllegalArgumentException("Usuário não encontrado")
     }
+
+    @Transactional
+    fun getUserByEmail(email: String): Usuario? {
+        return Usuario.find("email", email).firstResult()  // Retorna o usuário pelo email ou null
+    }
 }
