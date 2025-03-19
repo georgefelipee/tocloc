@@ -1,5 +1,6 @@
 package org.acme.hibernate.orm.panache.resources
 
+import jakarta.annotation.security.RolesAllowed
 import jakarta.inject.Inject
 import jakarta.ws.rs.Consumes
 import jakarta.ws.rs.POST
@@ -7,6 +8,7 @@ import jakarta.ws.rs.Produces
 import jakarta.validation.Valid
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.Path
+import jakarta.ws.rs.PathParam
 import jakarta.ws.rs.core.MediaType
 import jakarta.ws.rs.core.Response
 import org.acme.hibernate.orm.panache.forms.EspacoForm
@@ -39,6 +41,14 @@ class EspacoResource(@Inject var espacoService: EspacoService
     fun listEspacos(): Response {
         val espacos = espacoService.listAllEspacos()
         return Response.ok(espacos).build()
+    }
+
+
+    @GET
+    @Path("/list/{espacoId}")
+    fun listEspacoById( @PathParam("espacoId") espacoId: Long): Response {
+        val espaco = espacoService.listByLocalId(espacoId)
+        return Response.ok(espaco).build()
     }
 
 

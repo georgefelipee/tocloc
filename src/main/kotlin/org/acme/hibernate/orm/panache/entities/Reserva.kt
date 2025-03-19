@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(name = "reserva")
-class Reserva() : PanacheEntity() {
+class Reserva : PanacheEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)
@@ -24,13 +24,23 @@ class Reserva() : PanacheEntity() {
     @Column(nullable = false)
     var statusReserva: StatusReserva = StatusReserva.PENDENTE
 
-
-    constructor(usuario: Usuario, disponibilidade: Disponibilidade, statusReserva: StatusReserva) : this() {
+    // Construtor principal
+    constructor(
+        usuario: Usuario,
+        disponibilidade: Disponibilidade,
+        dataReserva: LocalDateTime = LocalDateTime.now(),
+        statusReserva: StatusReserva = StatusReserva.PENDENTE
+    ) {
         this.usuario = usuario
         this.disponibilidade = disponibilidade
+        this.dataReserva = dataReserva
         this.statusReserva = statusReserva
     }
+
+    // Construtor sem argumentos para JPA
+    protected constructor()
 }
+
 
 enum class StatusReserva {
     PENDENTE, CONFIRMADA, CANCELADA

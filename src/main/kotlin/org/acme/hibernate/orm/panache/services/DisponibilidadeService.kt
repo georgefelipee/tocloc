@@ -81,4 +81,8 @@ class DisponibilidadeService {
         return persistirDisponibilidades(espaco, horaInicio, horaFim, intervalo,form.valor, diasSemana)
     }
 
+
+    fun listDisponibilidadesByEspacoId(espacoId: Long): List<Disponibilidade> {
+        return Disponibilidade.list("espaco.id", espacoId)
+    }
 }

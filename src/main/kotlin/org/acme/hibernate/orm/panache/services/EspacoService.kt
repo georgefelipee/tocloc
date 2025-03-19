@@ -36,5 +36,9 @@ class EspacoService {
         return Espaco.listAll()
     }
 
+    fun listByLocalId(localId: Long): List<Espaco> {
+        return Espaco.list("local.id", localId)
+    }
+
 
 }

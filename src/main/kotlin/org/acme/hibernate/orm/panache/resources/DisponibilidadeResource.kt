@@ -7,6 +7,7 @@ import jakarta.ws.rs.Produces
 import jakarta.validation.Valid
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.Path
+import jakarta.ws.rs.PathParam
 import jakarta.ws.rs.core.MediaType
 import jakarta.ws.rs.core.Response
 import org.acme.hibernate.orm.panache.entities.Disponibilidade
@@ -40,6 +41,12 @@ class DisponibilidadeResource(@Inject var disponibilidadeService: Disponibilidad
     }
 
 
+    @GET
+    @Path("/espaco/{espacoId}")
+    fun listDisponibilidadeByEspacoId( @PathParam("espacoId") espacoId: Long): Response {
+        val disponibilidades = disponibilidadeService.listDisponibilidadesByEspacoId(espacoId)
+        return Response.ok(disponibilidades).build()
+    }
 
 
 
