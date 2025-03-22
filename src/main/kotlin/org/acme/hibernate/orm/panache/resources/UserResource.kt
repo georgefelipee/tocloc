@@ -1,5 +1,6 @@
 package org.acme.hibernate.orm.panache.resources
 
+import jakarta.annotation.security.PermitAll
 import jakarta.inject.Inject
 import jakarta.validation.Valid
 import jakarta.ws.rs.*
@@ -19,6 +20,7 @@ class UserResource(  @Inject var userService: UserService
 
     @POST
     @Path("/create")
+    @PermitAll
     fun createUser(@Valid request: UserForm): Response {
         val newUser = userService.createUser(
             nome = request.nome,

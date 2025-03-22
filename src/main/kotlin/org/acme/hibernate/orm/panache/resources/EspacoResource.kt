@@ -23,6 +23,7 @@ import org.acme.hibernate.orm.panache.services.UserService
 @Path("/espaco")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@RolesAllowed("Anfitriao")
 class EspacoResource(@Inject var espacoService: EspacoService
 ) {
 
